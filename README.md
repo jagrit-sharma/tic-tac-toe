@@ -32,9 +32,10 @@ To start the game, simply run the following command:
 This will start the web server, and you can access the game in your browser at http://localhost:8000.
 
 ## Game Features
+![alt text](images/image.png)
 - Two-player turn-based gameplay (Player X and Player O).
 - Automatically detects win or draw and displays the result.
-- Reset button to restart the game.
+- New Game button to restart the game.
 
 ## How It Works
 1. **Game Logic**: The game is controlled by the `TicTacToe` class in `game.py`. Players take turns to make moves by clicking on the grid cells.
