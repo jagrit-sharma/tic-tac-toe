@@ -1,4 +1,5 @@
 import justpy as jp
+import os
 from game import TicTacToe
 
 game = TicTacToe()
@@ -55,12 +56,12 @@ def tic_tac_toe():
     )
 
     # Message
-    wp.message = jp.P(text="Player X's turn", style="font-size: 1.25rem; text-align: center; margin: 1rem;", a=container)
+    wp.message = jp.P(text="Player X's turn", style="font-size: 1.25rem; text-align: center; margin: 1rem;", a=container) # type: ignore
 
     grid_container = jp.Div(style="display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);", a=container)
     grid = jp.Div(style="display: grid; grid-template-columns: repeat(3, 1fr); width: 16rem; margin: auto; background-color: black; border-collapse: collapse; border: 0;", a=grid_container)
 
-    wp.cells = []
+    wp.cells = [] # type: ignore
     for i in range(3):
         row_cells = []
         for j in range(3):
@@ -69,11 +70,11 @@ def tic_tac_toe():
                 border_classes += "border-b-2 "
             if j < 2:
                 border_classes += "border-r-2 "
-            cell = jp.Button(text='', classes=border_classes, a=grid)
+            cell = jp.Button(text='', classes=border_classes, a=grid) # type: ignore
             cell.row, cell.col = i, j
             cell.on('click', cell_click)
             row_cells.append(cell)
-        wp.cells.append(row_cells)
+        wp.cells.append(row_cells) # type: ignore
 
     # Reset Button
     def hover_in(self, msg):
@@ -90,7 +91,7 @@ def tic_tac_toe():
             "border: none; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;"
         )
 
-    resetBtn = jp.Button(
+    resetBtn = jp.Button( #type: ignore
         text='New Game',
         style=(
             "margin-top: 1rem; padding: 0.75rem 1.5rem; background-color: white; "
@@ -106,4 +107,6 @@ def tic_tac_toe():
 
     return wp
 
-jp.justpy(tic_tac_toe)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    jp.justpy(tic_tac_toe, host='0.0.0.0', port=port)
