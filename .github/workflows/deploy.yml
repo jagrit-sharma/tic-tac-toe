@@ -1,0 +1,39 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # Job 1: Build and Test
+  # This job simulates setting up your app to ensure it isn't broken
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      # Optional: If you had tests, you would run them here.
+      # For now, we just check if the script runs without syntax errors.
+      - name: Verify Script Syntax
+        run: python -m py_compile main.py
+
+  # Job 2: Deploy
+  # This job only runs if Job 1 succeeds
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deployment
+        # We use a standard "curl" request to hit the Render webhook
+        run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
