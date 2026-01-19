@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
       - name: Install Dependencies
         run: |
@@ -26,7 +26,7 @@ jobs:
       # Optional: If you had tests, you would run them here.
       # For now, we just check if the script runs without syntax errors.
       - name: Verify Script Syntax
-        run: python -m py_compile main.py
+        run: python -m py_compile app.py
 
   # Job 2: Deploy
   # This job only runs if Job 1 succeeds
